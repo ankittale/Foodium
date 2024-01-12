@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_height="200dp">
+
+    <View
+        android:id="@+id/view_image"
+        android:layout_width="200dp"
+        android:background="@color/mediumGray"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_title"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/mediumGray"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_description"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/mediumGray"
+        app:layout_constraintEnd_toEndOf="@+id/view_title"
+        app:layout_constraintStart_toStartOf="@+id/view_title"
+        app:layout_constraintTop_toBottomOf="@+id/view_title" />
+
+    <View
+        android:id="@+id/view_likes"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/mediumGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view_description"
+        app:layout_constraintTop_toBottomOf="@+id/view_description" />
+
+    <View
+        android:id="@+id/view_time"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/mediumGray"
+        app:layout_constraintStart_toEndOf="@+id/view_likes"
+        app:layout_constraintTop_toTopOf="@+id/view_likes" />
+
+    <View
+        android:id="@+id/view_vegan"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/mediumGray"
+        app:layout_constraintStart_toEndOf="@+id/view_time"
+        app:layout_constraintTop_toTopOf="@+id/view_time" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
