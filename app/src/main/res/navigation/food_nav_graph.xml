@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="com.labs.foodium.fragment.RecipesFragment"
+        android:name="com.labs.foodium.ui.fragment.RecipesFragment"
         android:label="@string/recipes_fragment" />
     <fragment
         android:id="@+id/foodJokeFragment"
-        android:name="com.labs.foodium.fragment.FoodJokeFragment"
+        android:name="com.labs.foodium.ui.fragment.FoodJokeFragment"
         android:label="@string/food_joke_fragment" />
     <fragment
         android:id="@+id/favouriteRecipeFragment"
-        android:name="com.labs.foodium.fragment.FavouriteRecipeFragment"
+        android:name="com.labs.foodium.ui.fragment.FavouriteRecipeFragment"
         android:label="@string/favorite_recipes_fragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.labs.foodium.api
+package com.labs.foodium.data.api
 
 import com.labs.foodium.models.FoodRecipe
 import retrofit2.Response

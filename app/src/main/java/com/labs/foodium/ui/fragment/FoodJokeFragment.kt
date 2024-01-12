@@ -1,4 +1,4 @@
-package com.labs.foodium.fragment
+package com.labs.foodium.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
