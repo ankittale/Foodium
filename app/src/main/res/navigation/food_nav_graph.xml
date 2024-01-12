@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/food_nav_graph"
+    app:startDestination="@id/recipesFragment">
+
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.labs.foodium.fragment.RecipesFragment"
+        android:label="@string/recipes_fragment" />
+    <fragment
+        android:id="@+id/foodJokeFragment"
+        android:name="com.labs.foodium.fragment.FoodJokeFragment"
+        android:label="@string/food_joke_fragment" />
+    <fragment
+        android:id="@+id/favouriteRecipeFragment"
+        android:name="com.labs.foodium.fragment.FavouriteRecipeFragment"
+        android:label="@string/favorite_recipes_fragment" />
+</navigation>
