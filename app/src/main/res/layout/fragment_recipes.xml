@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="foodViewModel"
+            type="com.labs.foodium.viewmodel.FoodViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,8 +67,10 @@
             android:layout_height="100dp"
             android:visibility="invisible"
             android:src="@drawable/ic_sad"
-            app:layout_constraintBottom_toBottomOf="@+id/shimmer_frame_view"
-            app:layout_constraintEnd_toEndOf="@+id/shimmer_frame_view"
+            readApiResponse1="@{foodViewModel.recipeResponse}"
+            readDatabase1="@{foodViewModel.readRecipe}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
@@ -78,6 +82,8 @@
             android:layout_marginTop="8dp"
             android:alpha="0.5"
             android:text="@string/lbl_no_internet_connection"
+            readApiResponse2="@{foodViewModel.recipeResponse}"
+            readDatabase2="@{foodViewModel.readRecipe}"
             android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="invisible"

@@ -1,6 +1,7 @@
 package com.labs.foodium.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,46 +9,72 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.labs.foodium.FoodViewModel
+import com.labs.foodium.viewmodel.FoodViewModel
 import com.labs.foodium.R
 import com.labs.foodium.adapter.RecipesAdapter
 import com.labs.foodium.databinding.FragmentRecipesBinding
 import com.labs.foodium.utils.Constants
 import com.labs.foodium.utils.NetworkResult
+import com.labs.foodium.utils.observeOnce
+import com.labs.foodium.viewmodel.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment: Fragment() {
 
     private lateinit var foodViewModel: FoodViewModel
+    private lateinit var recipesViewModel: RecipesViewModel
     private val recipesAdapter by lazy { RecipesAdapter() }
-    private lateinit var fragmentRecipesBinding: FragmentRecipesBinding
+    private var _binding: FragmentRecipesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         foodViewModel = ViewModelProvider(requireActivity())[FoodViewModel::class.java]
+        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
     }
 
     override fun onCreateView( inflater: LayoutInflater,  container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        fragmentRecipesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipes, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipes, container, false)
+        binding.lifecycleOwner = this // bcoz live data is use
+        binding.foodViewModel = foodViewModel
+
         setupRecycler()
-        requestApiData()
-        return fragmentRecipesBinding.root
+        readFromDatabase()
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     private fun setupRecycler() {
-        fragmentRecipesBinding.recyclerRecipe.adapter = recipesAdapter
-        fragmentRecipesBinding.recyclerRecipe.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerRecipe.adapter = recipesAdapter
+        binding.recyclerRecipe.layoutManager = LinearLayoutManager(requireContext())
         showShimmerEffect()
     }
 
-    private fun showShimmerEffect() {
-        fragmentRecipesBinding.shimmerFrameView.showShimmer(true)
+    private fun readFromDatabase() {
+        lifecycleScope.launch {
+            foodViewModel.readRecipe.observeOnce(viewLifecycleOwner){ database ->
+                if (database.isNotEmpty()) {
+                    Log.d("RecipeFragment", "From Database")
+                    recipesAdapter.setData(database[0].foodRecipe)
+                    hideShimmerEffect()
+                } else {
+                    requestApiData()
+                }
+            }
+        }
     }
 
     private fun requestApiData() {
-        foodViewModel.getRecipes(applyQueries())
+        Log.d("RecipeFragment", "From API call")
+        foodViewModel.getRecipes(recipesViewModel.applyQueries())
         foodViewModel.recipeResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -57,6 +84,7 @@ class RecipesFragment: Fragment() {
 
                 is NetworkResult.Error -> {
                     hideShimmerEffect()
+                    loadDataFromCache()
                     Toast.makeText(
                         requireContext(),
                         response.message.toString(),
@@ -73,19 +101,23 @@ class RecipesFragment: Fragment() {
         }
     }
 
-    private fun  applyQueries(): HashMap<String, String>{
-        val queries : HashMap<String, String> = HashMap()
-        queries[Constants.QUERY_NUMBER] = "50"
-        queries[Constants.QUERY_API_KEY] = Constants.API_KEY
-        queries[Constants.QUERY_TYPE] = "snack"
-        queries[Constants.QUERY_DIET] = "vegan"
-        queries[Constants.QUERY_ADD_RECIPE_INFORMATION] = "true"
-        queries[Constants.QUERY_FILL_INGREDIENTS] = "true"
-        return queries
+    private fun loadDataFromCache() {
+        lifecycleScope.launch {
+            foodViewModel.readRecipe.observe(viewLifecycleOwner){ database ->
+                if (database.isNotEmpty()) {
+                    recipesAdapter.setData(database[0].foodRecipe)
+                }
+
+            }
+        }
+    }
+
+    private fun showShimmerEffect() {
+        binding.shimmerFrameView.showShimmer(true)
     }
 
     private fun hideShimmerEffect() {
-        fragmentRecipesBinding.shimmerFrameView.hideShimmer()
-        fragmentRecipesBinding.shimmerFrameView.visibility = View.GONE
+        binding.shimmerFrameView.hideShimmer()
+        binding.shimmerFrameView.visibility = View.GONE
     }
 }
