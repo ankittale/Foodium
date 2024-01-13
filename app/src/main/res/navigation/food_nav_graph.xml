@@ -7,7 +7,14 @@
     <fragment
         android:id="@+id/recipesFragment"
         android:name="com.labs.foodium.ui.fragment.RecipesFragment"
-        android:label="@string/recipes_fragment" />
+        android:label="@string/recipes_fragment" >
+        <action
+            android:id="@+id/action_recipesFragment_to_recipesBottomSheet"
+            app:destination="@id/recipesBottomSheet" />
+        <argument android:name="backFromBottomSheet"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
     <fragment
         android:id="@+id/foodJokeFragment"
         android:name="com.labs.foodium.ui.fragment.FoodJokeFragment"
@@ -16,4 +23,11 @@
         android:id="@+id/favouriteRecipeFragment"
         android:name="com.labs.foodium.ui.fragment.FavouriteRecipeFragment"
         android:label="@string/favorite_recipes_fragment" />
+    <dialog
+        android:id="@+id/recipesBottomSheet"
+        android:name="com.labs.foodium.ui.bottomsheet.RecipesBottomSheet">
+        <action
+            android:id="@+id/action_recipesBottomSheet_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </dialog>
 </navigation>

@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.labs.foodium.viewmodel.FoodViewModel
 import com.labs.foodium.R
@@ -30,6 +32,7 @@ class RecipesFragment: Fragment() {
     private val recipesAdapter by lazy { RecipesAdapter() }
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
+    private val args by navArgs<RecipesFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,11 @@ class RecipesFragment: Fragment() {
 
         setupRecycler()
         readFromDatabase()
+
+        binding.fabRecipe.setOnClickListener {
+            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+        }
+
         return binding.root
     }
 
@@ -61,7 +69,7 @@ class RecipesFragment: Fragment() {
     private fun readFromDatabase() {
         lifecycleScope.launch {
             foodViewModel.readRecipe.observeOnce(viewLifecycleOwner){ database ->
-                if (database.isNotEmpty()) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipeFragment", "From Database")
                     recipesAdapter.setData(database[0].foodRecipe)
                     hideShimmerEffect()
