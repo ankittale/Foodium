@@ -28,13 +28,15 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RecipesFragment: Fragment() {
 
+    private var isDataRequested = false
+    private val args by navArgs<RecipesFragmentArgs>()
+
     private lateinit var foodViewModel: FoodViewModel
     private lateinit var recipesViewModel: RecipesViewModel
+
     private val recipesAdapter by lazy { RecipesAdapter() }
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
-    private val args by navArgs<RecipesFragmentArgs>()
-
     private lateinit var networkListener: NetworkListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,12 +92,15 @@ class RecipesFragment: Fragment() {
     private fun readFromDatabase() {
         lifecycleScope.launch {
             foodViewModel.readRecipe.observeOnce(viewLifecycleOwner){ database ->
-                if (database.isNotEmpty() && !args.backFromBottomSheet) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet || database.isNotEmpty() && isDataRequested) {
                     Log.d("RecipeFragment", "From Database")
                     recipesAdapter.setData(database[0].foodRecipe)
                     hideShimmerEffect()
                 } else {
-                    requestApiData()
+                    if (!isDataRequested){
+                        requestApiData()
+                        isDataRequested = true
+                    }
                 }
             }
         }
