@@ -18,6 +18,7 @@ import com.labs.foodium.R
 import com.labs.foodium.adapter.RecipesAdapter
 import com.labs.foodium.databinding.FragmentRecipesBinding
 import com.labs.foodium.utils.Constants
+import com.labs.foodium.utils.NetworkListener
 import com.labs.foodium.utils.NetworkResult
 import com.labs.foodium.utils.observeOnce
 import com.labs.foodium.viewmodel.RecipesViewModel
@@ -34,6 +35,8 @@ class RecipesFragment: Fragment() {
     private val binding get() = _binding!!
     private val args by navArgs<RecipesFragmentArgs>()
 
+    private lateinit var networkListener: NetworkListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         foodViewModel = ViewModelProvider(requireActivity())[FoodViewModel::class.java]
@@ -46,10 +49,28 @@ class RecipesFragment: Fragment() {
         binding.foodViewModel = foodViewModel
 
         setupRecycler()
-        readFromDatabase()
+
+        recipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
+            recipesViewModel.backOnline = it
+        }
+
+        lifecycleScope.launch {
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvailability(requireContext())
+                .collect {status ->
+                    Log.d("NetworkListener", status.toString())
+                    recipesViewModel.networkStatus = status
+                    recipesViewModel.showNetworkStatus()
+                    readFromDatabase()
+                }
+        }
 
         binding.fabRecipe.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            if (recipesViewModel.networkStatus) {
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            } else {
+                recipesViewModel.showNetworkStatus()
+            }
         }
 
         return binding.root
