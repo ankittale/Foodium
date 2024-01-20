@@ -3,11 +3,22 @@ package com.labs.foodium.ui.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -38,6 +49,7 @@ class RecipesFragment: Fragment() {
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
     private lateinit var networkListener: NetworkListener
+    var searchRecipesView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +90,47 @@ class RecipesFragment: Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val menuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                return menuInflater.inflate(R.menu.recipes_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when(menuItem.itemId) {
+                    R.id.menu_search -> {
+                        setupSearchView(menuItem)
+                        searchRecipesView?.setOnQueryTextListener(object : OnQueryTextListener{
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                searchApiData(query.toString())
+                                return true
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                print(newText)
+                                return true
+                            }
+
+                        })
+                    }
+                }
+                return true
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun setupSearchView(menuItem: MenuItem) {
+        searchRecipesView = menuItem.actionView as SearchView
+        searchRecipesView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+                ?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
+        searchRecipesView?.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+            ?.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        searchRecipesView?.queryHint = "Search Recipes"
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -102,6 +155,36 @@ class RecipesFragment: Fragment() {
                         isDataRequested = true
                     }
                 }
+            }
+        }
+    }
+
+    private fun searchApiData(searchQuery: String){
+        showShimmerEffect()
+        foodViewModel.searchRecipes(recipesViewModel.applySearchQuery(searchQuery))
+        foodViewModel.searchResponse.observe(viewLifecycleOwner){response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    hideShimmerEffect()
+                    val foodRecipes = response.data
+                    foodRecipes?.let { recipesAdapter.setData(it) }
+                }
+
+                is NetworkResult.Error -> {
+                    hideShimmerEffect()
+                    loadDataFromCache()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is NetworkResult.Loading -> {
+                    showShimmerEffect()
+                }
+
+                else -> {}
             }
         }
     }

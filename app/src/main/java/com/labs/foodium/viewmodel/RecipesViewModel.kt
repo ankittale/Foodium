@@ -11,6 +11,13 @@ import com.labs.foodium.utils.Constants.Companion.API_KEY
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_DIET_TYPE
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_RECIPES_NUMBER
+import com.labs.foodium.utils.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
+import com.labs.foodium.utils.Constants.Companion.QUERY_API_KEY
+import com.labs.foodium.utils.Constants.Companion.QUERY_DIET
+import com.labs.foodium.utils.Constants.Companion.QUERY_FILL_INGREDIENTS
+import com.labs.foodium.utils.Constants.Companion.QUERY_NUMBER
+import com.labs.foodium.utils.Constants.Companion.QUERY_SEARCH
+import com.labs.foodium.utils.Constants.Companion.QUERY_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,14 +57,25 @@ class RecipesViewModel @Inject constructor(
             }
         }
 
-        queries[Constants.QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
-        queries[Constants.QUERY_API_KEY] = API_KEY
-        queries[Constants.QUERY_TYPE] = mealType
-        queries[Constants.QUERY_DIET] = dietType
-        queries[Constants.QUERY_ADD_RECIPE_INFORMATION] = "true"
-        queries[Constants.QUERY_FILL_INGREDIENTS] = "true"
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
+        queries[QUERY_TYPE] = mealType
+        queries[QUERY_DIET] = dietType
+        queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_FILL_INGREDIENTS] = "true"
         return queries
     }
+
+    fun applySearchQuery(searchQuery: String): HashMap<String, String> {
+        val queries: HashMap<String, String> = HashMap()
+        queries[QUERY_SEARCH] = searchQuery
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
+        queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_FILL_INGREDIENTS] = "true"
+        return queries
+    }
+
 
     fun showNetworkStatus() {
         if (!networkStatus) {
