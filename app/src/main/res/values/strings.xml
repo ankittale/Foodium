@@ -36,4 +36,7 @@
     <string name="diet_type">Diet Type</string>
     <string name="apply">Apply</string>
     <string name="search">Search</string>
+    <string name="lbl_details">Details</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

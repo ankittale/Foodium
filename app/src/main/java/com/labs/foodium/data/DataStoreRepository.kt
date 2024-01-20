@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.labs.foodium.utils.Constants
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_DIET_TYPE
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.labs.foodium.utils.Constants.Companion.PREFERENCES_BACK_ONLINE
@@ -14,6 +15,7 @@ import com.labs.foodium.utils.Constants.Companion.PREFERENCES_DIET_TYPE
 import com.labs.foodium.utils.Constants.Companion.PREFERENCES_DIET_TYPE_ID
 import com.labs.foodium.utils.Constants.Companion.PREFERENCES_MEAL_TYPE
 import com.labs.foodium.utils.Constants.Companion.PREFERENCES_MEAL_TYPE_ID
+import com.labs.foodium.utils.Constants.Companion.PREFERENCES_NAME
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
@@ -22,11 +24,11 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
+private val Context.dataStore by preferencesDataStore(PREFERENCES_NAME)
 
 @ActivityRetainedScoped
 class DataStoreRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
-    private val Context.dataStore by preferencesDataStore("recipes")
     private val foodDataStore = context.dataStore
 
     private object PreferenceKeys {

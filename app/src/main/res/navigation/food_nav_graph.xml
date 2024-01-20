@@ -14,6 +14,9 @@
         <argument android:name="backFromBottomSheet"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_recipesFragment_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
     </fragment>
     <fragment
         android:id="@+id/foodJokeFragment"
@@ -30,4 +33,12 @@
             android:id="@+id/action_recipesBottomSheet_to_recipesFragment"
             app:destination="@id/recipesFragment" />
     </dialog>
+    <activity
+        android:id="@+id/detailsActivity"
+        android:name="com.labs.foodium.ui.DetailsActivity"
+        android:label="@string/lbl_details" >
+        <argument
+            android:name="resultRecipes"
+            app:argType="com.labs.foodium.models.Result" />
+    </activity>
 </navigation>

@@ -4,6 +4,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -95,19 +96,22 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
     //Dagger - Hilt
-    implementation ("com.google.dagger:hilt-android:2.47")
-    kapt ("com.google.dagger:hilt-compiler:2.47")
+    implementation ("com.google.dagger:hilt-android:2.48")
+    kapt ("com.google.dagger:hilt-compiler:2.48")
     kapt ("androidx.hilt:hilt-compiler:1.1.0")
 
     // Gson
-    implementation ("com.google.code.gson:gson:2.10")
+    implementation ("com.google.code.gson:gson:2.10.1")
 
     // Jsoup
-    implementation ("org.jsoup:jsoup:1.13.1")
+    implementation ("org.jsoup:jsoup:1.16.1")
 
     // Data binding
     kapt ("androidx.databinding:databinding-common:8.2.1")
     kapt ("com.android.databinding:compiler:3.2.0-alpha10")
+
+    //TabLayout
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
 
     testImplementation("junit:junit:4.13.2")
