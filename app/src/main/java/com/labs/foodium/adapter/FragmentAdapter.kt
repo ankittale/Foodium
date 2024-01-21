@@ -1,25 +1,50 @@
 package com.labs.foodium.adapter
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.labs.foodium.models.Result
 import com.labs.foodium.ui.fragment.IngredientsFragment
 import com.labs.foodium.ui.fragment.InstructionsFragment
 import com.labs.foodium.ui.fragment.OverviewFragment
 
 
-class ViewPagerFragmentAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
-    FragmentStateAdapter(fragmentManager, lifecycle) {
+class ViewPagerFragmentAdapter( fragmentManager: FragmentManager, lifecycle: Lifecycle,
+                                resultRecipes: Result ) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    private val arrayList: ArrayList<Fragment> = ArrayList()
-
+    private val recipeToSend = resultRecipes
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> OverviewFragment()
-            1 -> IngredientsFragment()
-            2 -> InstructionsFragment()
-            else -> OverviewFragment()
+        when (position) {
+            0 -> {
+                val overviewFragment = OverviewFragment()
+                val argsBundle = Bundle()
+                argsBundle.putParcelable("recipeDetails", recipeToSend)
+                overviewFragment.arguments = argsBundle
+                return overviewFragment
+            }
+            1 -> {
+                val ingredientsFragment = IngredientsFragment()
+                val argsBundle = Bundle()
+                argsBundle.putParcelable("recipeDetails", recipeToSend)
+                ingredientsFragment.arguments = argsBundle
+                return ingredientsFragment
+            }
+            2 ->  {
+                val instructionsFragment = InstructionsFragment()
+                val argsBundle = Bundle()
+                argsBundle.putParcelable("recipeDetails", recipeToSend)
+                instructionsFragment.arguments = argsBundle
+                return instructionsFragment
+            }
+            else -> {
+                val overviewFragment = OverviewFragment()
+                val argsBundle = Bundle()
+                argsBundle.putParcelable("recipeDetails", recipeToSend)
+                overviewFragment.arguments = argsBundle
+                return overviewFragment
+            }
         }
     }
 

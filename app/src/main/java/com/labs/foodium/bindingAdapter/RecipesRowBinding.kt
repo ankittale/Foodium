@@ -12,6 +12,7 @@ import coil.load
 import com.labs.foodium.R
 import com.labs.foodium.models.Result
 import com.labs.foodium.ui.fragment.RecipesFragmentDirections
+import org.jsoup.Jsoup
 
 class RecipesRowBinding {
 
@@ -53,6 +54,15 @@ class RecipesRowBinding {
                         view.setColorFilter(ContextCompat.getColor(view.context, R.color.green))
                     }
                 }
+            }
+        }
+
+        @BindingAdapter("parseHtml")
+        @JvmStatic
+        fun parseHtml(textView: TextView, description: String?){
+            if(description != null) {
+                val desc = Jsoup.parse(description).text()
+                textView.text = desc
             }
         }
     }

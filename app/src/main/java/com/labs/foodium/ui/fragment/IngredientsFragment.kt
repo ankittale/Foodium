@@ -9,6 +9,7 @@ import com.labs.foodium.R
 
 
 class IngredientsFragment : Fragment() {
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
