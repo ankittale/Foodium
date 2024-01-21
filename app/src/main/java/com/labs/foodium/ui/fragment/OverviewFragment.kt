@@ -13,6 +13,8 @@ import coil.load
 import com.labs.foodium.R
 import com.labs.foodium.databinding.FragmentOverviewBinding
 import com.labs.foodium.models.Result
+import com.labs.foodium.utils.Constants
+import com.labs.foodium.utils.Constants.Companion.RECIPES_DETAILS
 import org.jsoup.Jsoup
 
 class OverviewFragment : Fragment() {
@@ -25,14 +27,17 @@ class OverviewFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         overViewDetails = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable("recipeDetails", Result::class.java)
+            arguments?.getParcelable(RECIPES_DETAILS, Result::class.java)
         } else {
-            arguments?.getParcelable("recipeDetails")
+            arguments?.getParcelable(RECIPES_DETAILS)
         }
     }
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _overviewBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false)
-        binding.mainImageView.load(overViewDetails?.image)
+        binding.mainImageView.load(overViewDetails?.image) {
+            crossfade(600)
+            error(R.drawable.ic_error_placeholder)
+        }
         binding.titleTextView.text = overViewDetails?.title
         binding.likesTextView.text = overViewDetails?.aggregateLikes.toString()
         binding.timeTextView.text = overViewDetails?.readyInMinutes.toString()
