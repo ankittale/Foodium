@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import com.labs.foodium.R
-import com.labs.foodium.databinding.FragmentIngredientsBinding
 import com.labs.foodium.databinding.FragmentInstructionsBinding
 import com.labs.foodium.models.Result
 import com.labs.foodium.utils.Constants
@@ -38,9 +37,13 @@ class InstructionsFragment : Fragment() {
     ): View {
         _instructionsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false)
         binding.instructionsWebView.webViewClient = object : WebViewClient() {}
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         val loadWebURL: String = instructionData?.sourceUrl.toString()
         binding.instructionsWebView.loadUrl(loadWebURL)
-        return binding.root
     }
 
     override fun onDestroy() {

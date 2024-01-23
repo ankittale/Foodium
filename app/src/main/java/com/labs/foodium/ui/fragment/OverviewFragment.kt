@@ -32,6 +32,10 @@ class OverviewFragment : Fragment() {
             arguments?.getParcelable(RECIPES_DETAILS)
         }
     }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+    }
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _overviewBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false)
         binding.mainImageView.load(overViewDetails?.image) {
