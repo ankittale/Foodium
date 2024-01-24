@@ -12,6 +12,7 @@ import com.labs.foodium.utils.Constants.Companion.DEFAULT_DIET_TYPE
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_RECIPES_NUMBER
 import com.labs.foodium.utils.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
+import com.labs.foodium.utils.Constants.Companion.QUERY_ADD_RECIPE_INSTRUCTION
 import com.labs.foodium.utils.Constants.Companion.QUERY_API_KEY
 import com.labs.foodium.utils.Constants.Companion.QUERY_DIET
 import com.labs.foodium.utils.Constants.Companion.QUERY_FILL_INGREDIENTS
@@ -62,6 +63,7 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_TYPE] = mealType
         queries[QUERY_DIET] = dietType
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_ADD_RECIPE_INSTRUCTION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
         return queries
     }
@@ -72,6 +74,7 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_ADD_RECIPE_INSTRUCTION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
         return queries
     }
