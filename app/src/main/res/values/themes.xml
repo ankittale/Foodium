@@ -15,11 +15,11 @@
 
     <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="background">@color/contextualActionBarColor</item>
+        <item name="textBackground">@color/contextualActionBarColor</item>
     </style>
 
 
     <style name="FoodActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
-        <item name="android:background">@color/actionBarBackgroundColor</item>
         <item name="android:titleTextColor">@color/white</item>
         <item name="android:iconTint">@color/white</item>
     </style>
