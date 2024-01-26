@@ -6,10 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionModeBackground">@color/contextualActionBarColor</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeStyle">@style/Widget.App.ActionMode</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_arrow_back</item>
     </style>
+
+    <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/contextualActionBarColor</item>
+    </style>
+
 
     <style name="FoodActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
         <item name="android:background">@color/actionBarBackgroundColor</item>

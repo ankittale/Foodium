@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="foodViewModel"
+            type="com.labs.foodium.viewmodel.FoodViewModel" />
+        <variable
+            name="favoriteAdapter"
+            type="com.labs.foodium.adapter.FavoriteRecipeAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +19,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favoriteRecipesRecyclerView"
+            viewVisibility="@{foodViewModel.readFavouriteRecipes}"
+            setData="@{favoriteAdapter}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
@@ -30,6 +37,7 @@
             android:layout_height="100dp"
             android:alpha="0.5"
             android:src="@drawable/ic_menu_book"
+            viewVisibility="@{foodViewModel.readFavouriteRecipes}"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +53,7 @@
             android:layout_marginTop="8dp"
             android:alpha="0.5"
             android:text="@string/no_favorite_recipes"
+            viewVisibility="@{foodViewModel.readFavouriteRecipes}"
             android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="invisible"

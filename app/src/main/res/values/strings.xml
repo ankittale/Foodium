@@ -46,4 +46,5 @@
     <string name="lbl_save_favourite">Save Favourite</string>
     <string name="save_to_favorites">Save Favorites\n</string>
     <string name="no_favorite_recipes">No Favorite Recipes</string>
+    <string name="delete_favorite_menu">Delete Favorite Recipe\n</string>
 </resources>

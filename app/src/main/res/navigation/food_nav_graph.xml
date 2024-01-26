@@ -25,7 +25,11 @@
     <fragment
         android:id="@+id/favouriteRecipeFragment"
         android:name="com.labs.foodium.ui.fragment.FavouriteRecipeFragment"
-        android:label="@string/favorite_recipes_fragment" />
+        android:label="@string/favorite_recipes_fragment" >
+        <action
+            android:id="@+id/action_favouriteRecipeFragment_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+    </fragment>
     <dialog
         android:id="@+id/recipesBottomSheet"
         android:name="com.labs.foodium.ui.bottomsheet.RecipesBottomSheet">
