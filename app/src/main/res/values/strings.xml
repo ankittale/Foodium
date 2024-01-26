@@ -43,4 +43,7 @@
     <string name="cheap">Cheap</string>
     <string name="healthy">Healthy</string>
     <string name="dairy_free">Dairy Free</string>
+    <string name="lbl_save_favourite">Save Favourite</string>
+    <string name="save_to_favorites">Save Favorites\n</string>
+    <string name="no_favorite_recipes">No Favorite Recipes</string>
 </resources>

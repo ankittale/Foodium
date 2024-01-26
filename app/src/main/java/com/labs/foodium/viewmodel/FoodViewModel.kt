@@ -10,7 +10,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.labs.foodium.data.FoodRepository
-import com.labs.foodium.data.db.RecipesEntity
+import com.labs.foodium.data.db.entity.FavouriteEntity
+import com.labs.foodium.data.db.entity.RecipesEntity
 import com.labs.foodium.models.FoodRecipe
 import com.labs.foodium.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,11 +26,24 @@ class FoodViewModel @Inject constructor(
     private val repository: FoodRepository, application: Application ) : AndroidViewModel(application) {
 
     /*ROOM*/
-    val readRecipe: LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
+    val readRecipe: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
 
+    val readFavouriteRecipes:LiveData<List<FavouriteEntity>> = repository.local.readFavoriteRecipes().asLiveData()
 
     private fun insertRecipes(recipesEntity: RecipesEntity) = viewModelScope.launch(Dispatchers.IO) {
         repository.local.insertRecipes(recipesEntity)
+    }
+
+    fun insertFavouriteRecipes(favouriteEntity: FavouriteEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.insertFavoriteRecipes(favouriteEntity)
+    }
+
+    fun deleteFavouriteRecipes(favouriteEntity: FavouriteEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.deleteFavoriteRecipe(favouriteEntity)
+    }
+
+    fun deleteAllFavouriteRecipes() = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.deleteAllFavoriteRecipes()
     }
 
     /*RETROFIT*/

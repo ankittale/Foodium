@@ -1,4 +1,4 @@
-package com.labs.foodium.data.db
+package com.labs.foodium.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

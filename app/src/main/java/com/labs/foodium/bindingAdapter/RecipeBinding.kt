@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.labs.foodium.data.db.RecipesEntity
+import com.labs.foodium.data.db.entity.RecipesEntity
 import com.labs.foodium.models.FoodRecipe
 import com.labs.foodium.utils.NetworkResult
 
