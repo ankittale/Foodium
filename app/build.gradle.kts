@@ -74,8 +74,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.6.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.6.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.5.0")
 
     // Navigation Components
@@ -107,12 +107,15 @@ dependencies {
     implementation ("org.jsoup:jsoup:1.16.1")
 
     // Data binding
-    kapt ("androidx.databinding:databinding-common:8.2.1")
+    kapt ("androidx.databinding:databinding-common:8.2.2")
     kapt ("com.android.databinding:compiler:3.2.0-alpha10")
 
     //TabLayout
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
+
+    //Splash Screen
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

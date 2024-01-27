@@ -2,6 +2,7 @@ package com.labs.foodium.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
