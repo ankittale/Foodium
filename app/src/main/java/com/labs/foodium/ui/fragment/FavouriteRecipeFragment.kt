@@ -57,6 +57,8 @@ class FavouriteRecipeFragment: Fragment() {
                             if (favoriteEntity.isNotEmpty()){
                                 foodViewModel.deleteAllFavouriteRecipes()
                                 "All Recipes Removed".showSnackMessage()
+                            } else {
+                                "No Recipes for deletion".showSnackMessage()
                             }
                         }
                     }

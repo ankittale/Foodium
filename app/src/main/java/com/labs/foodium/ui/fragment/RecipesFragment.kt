@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
@@ -21,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +28,6 @@ import com.labs.foodium.viewmodel.FoodViewModel
 import com.labs.foodium.R
 import com.labs.foodium.adapter.RecipesAdapter
 import com.labs.foodium.databinding.FragmentRecipesBinding
-import com.labs.foodium.utils.Constants
 import com.labs.foodium.utils.NetworkListener
 import com.labs.foodium.utils.NetworkResult
 import com.labs.foodium.utils.observeOnce
@@ -69,14 +68,16 @@ class RecipesFragment: Fragment() {
         }
 
         lifecycleScope.launch {
-            networkListener = NetworkListener()
-            networkListener.checkNetworkAvailability(requireContext())
-                .collect {status ->
-                    Log.d("NetworkListener", status.toString())
-                    recipesViewModel.networkStatus = status
-                    recipesViewModel.showNetworkStatus()
-                    readFromDatabase()
-                }
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                networkListener = NetworkListener()
+                networkListener.checkNetworkAvailability(requireContext())
+                    .collect {status ->
+                        Log.d("NetworkListener", status.toString())
+                        recipesViewModel.networkStatus = status
+                        recipesViewModel.showNetworkStatus()
+                        readFromDatabase()
+                    }
+            }
         }
 
         binding.fabRecipe.setOnClickListener {
