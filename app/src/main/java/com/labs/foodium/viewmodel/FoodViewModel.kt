@@ -18,6 +18,9 @@ import com.labs.foodium.models.FoodRecipe
 import com.labs.foodium.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
@@ -26,6 +29,18 @@ import javax.inject.Inject
 @HiltViewModel
 class FoodViewModel @Inject constructor(
     private val repository: FoodRepository, application: Application ) : AndroidViewModel(application) {
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
+
+
+    init {
+        viewModelScope.launch {
+            delay(3000)
+            _isLoading.value = false
+        }
+    }
+
 
     /*ROOM*/
     val readRecipe: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
