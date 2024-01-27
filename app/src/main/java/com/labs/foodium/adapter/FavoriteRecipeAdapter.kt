@@ -70,6 +70,8 @@ class FavoriteRecipeAdapter(
         holder.binding.favoriteRowRecipes.strokeColor = ContextCompat.getColor(requireActivity, strokeColor)
     }
 
+    //Action Mode Applied Here
+    
     private fun applyActionModeTitle() {
         when (selectedRecipes.size) {
             0 -> {
