@@ -43,6 +43,7 @@ class DetailsActivity: AppCompatActivity() {
 
         setSupportActionBar(detailsBinding.detailToolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        detailsBinding.recipeViewpager.isUserInputEnabled = true
         detailsBinding.recipeViewpager.adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle, args.resultRecipes)
 
         TabLayoutMediator(detailsBinding.tabLayout, detailsBinding.recipeViewpager) {
