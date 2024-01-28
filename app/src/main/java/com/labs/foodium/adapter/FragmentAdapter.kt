@@ -9,7 +9,6 @@ import com.labs.foodium.models.Result
 import com.labs.foodium.ui.fragment.IngredientsFragment
 import com.labs.foodium.ui.fragment.InstructionsFragment
 import com.labs.foodium.ui.fragment.OverviewFragment
-import com.labs.foodium.utils.Constants
 import com.labs.foodium.utils.Constants.Companion.RECIPES_DETAILS
 
 

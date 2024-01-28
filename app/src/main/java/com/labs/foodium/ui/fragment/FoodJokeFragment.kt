@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class FoodJokeFragment: Fragment() {
 
-    private val foodViewModel by viewModels<FoodViewModel>()
+    private val foodViewModel: FoodViewModel by viewModels()
     private var _binding: FragmentJokeBinding? = null
     private val binding get() =  _binding!!
 

@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import coil.load
@@ -33,9 +35,6 @@ class OverviewFragment : Fragment() {
         }
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-    }
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _overviewBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false)
         binding.mainImageView.load(overViewDetails?.image) {
@@ -50,39 +49,23 @@ class OverviewFragment : Fragment() {
             binding.summaryTextView.text = summaryCleaned
         }
 
-        if (overViewDetails?.vegetarian == true) {
-            binding.vegetarianImageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
-            binding.vegetarianTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-        }
-
-        if (overViewDetails?.vegan == true) {
-            binding.veganImageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
-            binding.veganTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-        }
-
-        if (overViewDetails?.glutenFree == true) {
-            binding.glutenFreeImageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
-            binding.glutenFreeTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-        }
-
-
-        if (overViewDetails?.dairyFree == true) {
-            binding.dairyFreeImageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
-            binding.dairyFreeTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-        }
-
-        if (overViewDetails?.veryHealthy == true) {
-            binding.healthyImageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
-            binding.healthyTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-        }
-
-        if (overViewDetails?.cheap == true) {
-            binding.cheapImageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
-            binding.cheapTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-        }
+        updateTheColors(overViewDetails?.vegetarian, binding.vegetarianImageView, binding.vegetarianTextView)
+        updateTheColors(overViewDetails?.vegan, binding.veganImageView, binding.veganTextView)
+        updateTheColors(overViewDetails?.glutenFree, binding.glutenFreeImageView, binding.glutenFreeTextView)
+        updateTheColors(overViewDetails?.dairyFree, binding.dairyFreeImageView, binding.dairyFreeTextView)
+        updateTheColors(overViewDetails?.veryHealthy, binding.healthyImageView, binding.healthyTextView)
+        updateTheColors(overViewDetails?.cheap, binding.cheapImageView, binding.cheapTextView)
 
         return binding.root
     }
+
+    private fun updateTheColors(stateIsOn: Boolean?, imageView: ImageView, textView: TextView) {
+        if (stateIsOn == true) {
+            imageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
+            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

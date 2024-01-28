@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.labs.foodium.data.DataStoreRepository
+import com.labs.foodium.data.MealAndDietType
 import com.labs.foodium.utils.Constants
 import com.labs.foodium.utils.Constants.Companion.API_KEY
 import com.labs.foodium.utils.Constants.Companion.DEFAULT_DIET_TYPE
