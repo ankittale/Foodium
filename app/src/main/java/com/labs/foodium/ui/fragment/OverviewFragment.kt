@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import coil.load
 import com.labs.foodium.R
+import com.labs.foodium.bindingAdapter.RecipesRowBinding
 import com.labs.foodium.databinding.FragmentOverviewBinding
 import com.labs.foodium.models.Result
 import com.labs.foodium.utils.Constants
@@ -36,7 +37,7 @@ class OverviewFragment : Fragment() {
     }
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        _overviewBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false)
+        _overviewBinding = FragmentOverviewBinding.inflate(inflater, container, false)
         binding.mainImageView.load(overViewDetails?.image) {
             crossfade(600)
             error(R.drawable.ic_error_placeholder)
@@ -44,10 +45,8 @@ class OverviewFragment : Fragment() {
         binding.titleTextView.text = overViewDetails?.title
         binding.likesTextView.text = overViewDetails?.aggregateLikes.toString()
         binding.timeTextView.text = overViewDetails?.readyInMinutes.toString()
-        overViewDetails?.summary.let {summary ->
-            val summaryCleaned = Jsoup.parse(summary.toString()).text()
-            binding.summaryTextView.text = summaryCleaned
-        }
+        RecipesRowBinding.parseHtml(binding.summaryTextView, overViewDetails?.summary)
+
 
         updateTheColors(overViewDetails?.vegetarian, binding.vegetarianImageView, binding.vegetarianTextView)
         updateTheColors(overViewDetails?.vegan, binding.veganImageView, binding.veganTextView)

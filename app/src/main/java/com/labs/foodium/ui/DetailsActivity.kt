@@ -3,6 +3,7 @@ package com.labs.foodium.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -35,13 +36,11 @@ class DetailsActivity: AppCompatActivity() {
 
     private val tabTitle = arrayOf("Overview", "Ingredients", "Instructions")
 
-    override fun onDestroy() {
-        super.onDestroy()
-        changeIconColor(appMenuItem, R.color.white)
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        detailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_details)
+        detailsBinding = ActivityDetailsBinding.inflate(layoutInflater)
+        setContentView(detailsBinding.root)
+
         setSupportActionBar(detailsBinding.detailToolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         detailsBinding.recipeViewpager.adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle, args.resultRecipes)
@@ -135,5 +134,9 @@ class DetailsActivity: AppCompatActivity() {
             .show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        changeIconColor(appMenuItem, R.color.white)
+    }
 }
 

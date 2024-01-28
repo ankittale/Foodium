@@ -57,7 +57,7 @@ class RecipesFragment: Fragment() {
     }
 
     override fun onCreateView( inflater: LayoutInflater,  container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipes, container, false)
+        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this // bcoz live data is use
         binding.foodViewModel = foodViewModel
 
@@ -89,6 +89,13 @@ class RecipesFragment: Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (foodViewModel.recyclerViewState != null) {
+            binding.recyclerRecipe.layoutManager?.onRestoreInstanceState(foodViewModel.recyclerViewState)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -134,6 +141,7 @@ class RecipesFragment: Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        foodViewModel.recyclerViewState = binding.recyclerRecipe.layoutManager?.onSaveInstanceState()
         _binding = null
     }
 
@@ -198,6 +206,7 @@ class RecipesFragment: Fragment() {
                 is NetworkResult.Success -> {
                     hideShimmerEffect()
                     response.data?.let { recipesAdapter.setData(it) }
+                    recipesViewModel.saveMealAndDietType()
                 }
 
                 is NetworkResult.Error -> {

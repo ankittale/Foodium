@@ -35,7 +35,7 @@ class InstructionsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _instructionsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false)
+        _instructionsBinding = FragmentInstructionsBinding.inflate(inflater, container, false)
         binding.instructionsWebView.webViewClient = object : WebViewClient() {}
         return binding.root
     }

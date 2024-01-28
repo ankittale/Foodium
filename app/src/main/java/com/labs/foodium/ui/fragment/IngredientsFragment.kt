@@ -37,7 +37,7 @@ class IngredientsFragment : Fragment() {
     }
 
     override fun onCreateView( inflater: LayoutInflater,  container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        _ingredientsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_ingredients, container, false)
+        _ingredientsBinding = FragmentIngredientsBinding.inflate(inflater, container, false)
         setupRecyclerView()
         return binding.root
     }

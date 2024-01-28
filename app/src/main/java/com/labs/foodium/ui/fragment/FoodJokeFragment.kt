@@ -35,8 +35,8 @@ class FoodJokeFragment: Fragment() {
 
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_joke, container, false)
-        binding.lifecycleOwner = this
+        _binding = FragmentJokeBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.foodViewModel = foodViewModel
 
         foodViewModel.getFoodJoke(API_KEY)

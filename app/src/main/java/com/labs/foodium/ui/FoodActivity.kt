@@ -38,7 +38,8 @@ class FoodActivity : AppCompatActivity() {
                 splashScreen.remove()
             }
         }
-        activityFoodBinding = DataBindingUtil.setContentView(this, R.layout.activity_food)
+        activityFoodBinding = ActivityFoodBinding.inflate(layoutInflater)
+        setContentView(activityFoodBinding.root)
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         setSupportActionBar(activityFoodBinding.foodToolBar)
